@@ -376,11 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                    const form = new FormData();
+                    Object.entries(formData).forEach(([key, val]) => form.append(key, val));
+
                     await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
+                        body: form
                     });
                 } else {
                     // Demo mode — simulate a short delay

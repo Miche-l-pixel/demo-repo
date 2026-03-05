@@ -27,7 +27,7 @@ Follow these steps to connect the volunteer form to your Google Sheet.
 ```javascript
 function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = JSON.parse(e.postData.contents);
+  var data = e.parameter;
 
   sheet.appendRow([
     data.timestamp || new Date().toLocaleString(),
