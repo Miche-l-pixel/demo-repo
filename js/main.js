@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ── Volunteer Modal ──
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8aglhnveVObav0UP14u-AIyq-bvq241e7t0gY9W2_4ViVfhUlrcM5tTdyIVm5S3xV/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBdt7Q6ZKDpu5ysms549QJx1qpE-2QZ3jfUj-auLvcPNqyfM4g2i7Nc9uU05za-stx/exec';
 
     const volunteerBtn = document.getElementById('volunteerBtn');
     const volunteerOverlay = document.getElementById('volunteerOverlay');
