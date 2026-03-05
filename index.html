@@ -255,7 +255,8 @@
                 </p>
                 <div class="cta-actions">
                     <a href="#donate" class="btn btn-accent">Donate Now <i class="ph ph-heart"></i></a>
-                    <a href="#donate" class="btn btn-outline">Volunteer <i class="ph ph-hand-waving"></i></a>
+                    <button class="btn btn-outline" id="volunteerBtn">Volunteer <i
+                            class="ph ph-hand-waving"></i></button>
                 </div>
             </div>
         </div>
@@ -433,6 +434,96 @@
         </div>
     </footer>
 
+
+    <div class="volunteer-overlay" id="volunteerOverlay">
+        <div class="volunteer-modal" id="volunteerModal">
+            <button class="volunteer-close" id="volunteerClose" aria-label="Close form">
+                <i class="ph ph-x"></i>
+            </button>
+
+            <div class="volunteer-header">
+                <div class="volunteer-icon">
+                    <i class="ph ph-hand-heart"></i>
+                </div>
+                <h2>Become a Volunteer</h2>
+                <p>Join our community of changemakers and help us share more smiles.</p>
+            </div>
+
+            <form class="volunteer-form" id="volunteerForm" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="volName">Full Name <span class="required">*</span></label>
+                        <input type="text" id="volName" name="name" placeholder="Your full name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="volPhone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="volPhone" name="phone" placeholder="+91 XXXXX XXXXX" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="volEmail">Email <span class="optional">(optional)</span></label>
+                        <input type="email" id="volEmail" name="email" placeholder="your@email.com" />
+                    </div>
+                    <div class="form-group">
+                        <label for="volCity">City / Area <span class="required">*</span></label>
+                        <input type="text" id="volCity" name="city" placeholder="e.g. Kolkata" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="volHelp">How would you like to help? <span class="required">*</span></label>
+                    <select id="volHelp" name="helpType" required>
+                        <option value="" disabled selected>Choose an option</option>
+                        <option value="On-ground volunteering">On-ground volunteering</option>
+                        <option value="Fundraising">Fundraising</option>
+                        <option value="Social media promotion">Social media promotion</option>
+                        <option value="Event coordination">Event coordination</option>
+                        <option value="Any">Any — I'm flexible!</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Available on weekends?</label>
+                    <div class="toggle-group">
+                        <label class="toggle-option">
+                            <input type="radio" name="weekends" value="Yes" />
+                            <span>Yes</span>
+                        </label>
+                        <label class="toggle-option">
+                            <input type="radio" name="weekends" value="No" />
+                            <span>No</span>
+                        </label>
+                        <label class="toggle-option">
+                            <input type="radio" name="weekends" value="Sometimes" checked />
+                            <span>Sometimes</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="volMessage">Message <span class="optional">(optional)</span></label>
+                    <textarea id="volMessage" name="message" rows="3"
+                        placeholder="Anything you'd like us to know..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary volunteer-submit" id="volunteerSubmit">
+                    <i class="ph ph-paper-plane-tilt"></i>
+                    Submit Application
+                </button>
+            </form>
+
+            <div class="volunteer-success" id="volunteerSuccess" style="display: none;">
+                <div class="success-icon">
+                    <i class="ph ph-check-circle"></i>
+                </div>
+                <h3>Thank You!</h3>
+                <p>Your volunteer application has been submitted. We'll reach out to you soon!</p>
+                <button class="btn btn-primary" id="volunteerSuccessClose">Close</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="js/main.js"></script>

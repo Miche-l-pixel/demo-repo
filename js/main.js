@@ -276,4 +276,127 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+
+    // ── Volunteer Modal ──
+    const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; // Replace after deploying Apps Script
+
+    const volunteerBtn = document.getElementById('volunteerBtn');
+    const volunteerOverlay = document.getElementById('volunteerOverlay');
+    const volunteerModal = document.getElementById('volunteerModal');
+    const volunteerClose = document.getElementById('volunteerClose');
+    const volunteerForm = document.getElementById('volunteerForm');
+    const volunteerSubmit = document.getElementById('volunteerSubmit');
+    const volunteerSuccess = document.getElementById('volunteerSuccess');
+    const volunteerSuccessClose = document.getElementById('volunteerSuccessClose');
+
+    function openVolunteerModal() {
+        if (!volunteerOverlay) return;
+        volunteerOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeVolunteerModal() {
+        if (!volunteerOverlay) return;
+        volunteerOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        // Reset after animation
+        setTimeout(() => {
+            if (volunteerForm) volunteerForm.reset();
+            if (volunteerSuccess) volunteerSuccess.style.display = 'none';
+            if (volunteerForm) volunteerForm.style.display = '';
+            if (volunteerSubmit) {
+                volunteerSubmit.classList.remove('loading');
+                volunteerSubmit.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Submit Application';
+            }
+            // Clear error states
+            volunteerForm?.querySelectorAll('.form-group.error').forEach(g => g.classList.remove('error'));
+        }, 350);
+    }
+
+    if (volunteerBtn) volunteerBtn.addEventListener('click', openVolunteerModal);
+    if (volunteerClose) volunteerClose.addEventListener('click', closeVolunteerModal);
+    if (volunteerSuccessClose) volunteerSuccessClose.addEventListener('click', closeVolunteerModal);
+
+    if (volunteerOverlay) {
+        volunteerOverlay.addEventListener('click', (e) => {
+            if (e.target === volunteerOverlay) closeVolunteerModal();
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && volunteerOverlay?.classList.contains('active')) {
+            closeVolunteerModal();
+        }
+    });
+
+    if (volunteerForm) {
+        volunteerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Clear previous errors
+            volunteerForm.querySelectorAll('.form-group.error').forEach(g => g.classList.remove('error'));
+
+            // Validate required fields
+            const name = document.getElementById('volName');
+            const phone = document.getElementById('volPhone');
+            const city = document.getElementById('volCity');
+            const helpType = document.getElementById('volHelp');
+            let hasError = false;
+
+            [name, phone, city, helpType].forEach(field => {
+                if (!field.value.trim()) {
+                    field.closest('.form-group').classList.add('error');
+                    hasError = true;
+                }
+            });
+
+            if (hasError) {
+                const firstError = volunteerForm.querySelector('.form-group.error input, .form-group.error select');
+                if (firstError) firstError.focus();
+                return;
+            }
+
+            // Show loading
+            volunteerSubmit.classList.add('loading');
+            volunteerSubmit.innerHTML = '<i class="ph ph-spinner"></i> Submitting...';
+
+            const weekendRadio = volunteerForm.querySelector('input[name="weekends"]:checked');
+
+            const formData = {
+                name: name.value.trim(),
+                phone: phone.value.trim(),
+                email: document.getElementById('volEmail').value.trim(),
+                city: city.value.trim(),
+                helpType: helpType.value,
+                weekends: weekendRadio ? weekendRadio.value : 'Sometimes',
+                message: document.getElementById('volMessage').value.trim(),
+                timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+            };
+
+            try {
+                if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                } else {
+                    // Demo mode — simulate a short delay
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    console.log('Volunteer form data (demo mode):', formData);
+                }
+
+                // Show success
+                volunteerForm.style.display = 'none';
+                volunteerSuccess.style.display = '';
+            } catch (err) {
+                console.error('Submission error:', err);
+                alert('Something went wrong. Please try again or contact us directly.');
+                volunteerSubmit.classList.remove('loading');
+                volunteerSubmit.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Submit Application';
+            }
+        });
+    }
 });
