@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ── Volunteer Modal ──
-    const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; // Replace after deploying Apps Script
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8aglhnveVObav0UP14u-AIyq-bvq241e7t0gY9W2_4ViVfhUlrcM5tTdyIVm5S3xV/exec';
 
     const volunteerBtn = document.getElementById('volunteerBtn');
     const volunteerOverlay = document.getElementById('volunteerOverlay');
