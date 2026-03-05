@@ -318,17 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (volunteerClose) volunteerClose.addEventListener('click', closeVolunteerModal);
     if (volunteerSuccessClose) volunteerSuccessClose.addEventListener('click', closeVolunteerModal);
 
-    if (volunteerOverlay) {
-        volunteerOverlay.addEventListener('click', (e) => {
-            if (e.target === volunteerOverlay) closeVolunteerModal();
-        });
-    }
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && volunteerOverlay?.classList.contains('active')) {
-            closeVolunteerModal();
-        }
-    });
 
     if (volunteerForm) {
         volunteerForm.addEventListener('submit', async (e) => {
