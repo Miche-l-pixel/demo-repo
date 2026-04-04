@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const statsSection = document.querySelector('.impact');
+    const statsSection = document.querySelector('.stats-bar');
     if (statsSection) {
         const statsObserver = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
