@@ -177,6 +177,18 @@ h6 {
     color: var(--clr-primary);
 }
 
+.btn-outline-black {
+    background: transparent;
+    color: var(--clr-dark);
+    border: 1.5px solid var(--clr-dark);
+}
+
+.btn-outline-black:hover {
+    background: var(--clr-dark);
+    color: var(--clr-white);
+    transform: translateY(-1px);
+}
+
 .btn-white {
     background: var(--clr-white);
     color: var(--clr-primary);
@@ -343,29 +355,28 @@ h6 {
 }
 
 .hero-top-badge {
-    text-align: center;
+    text-align: left;
     margin-bottom: var(--space-md);
-}
-
-.hero-content {
-    text-align: center;
-    max-width: 700px;
-    margin: var(--space-xl) auto 0;
 }
 
 .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: var(--space-xs);
-    background: var(--clr-primary-light);
-    border: 1px solid rgba(47, 93, 80, 0.15);
-    padding: 0.4rem 1.1rem;
+    background: var(--clr-dark);
+    border: none;
+    padding: 0.45rem 1.2rem;
     border-radius: 100px;
-    color: var(--clr-primary);
+    color: var(--clr-white);
     font-size: var(--fs-small);
     font-weight: 600;
-    margin-bottom: var(--space-md);
     animation: fadeInUp 0.8s var(--ease-out) 0.2s both;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 700px;
+    margin: var(--space-xl) auto 0;
 }
 
 
@@ -427,19 +438,15 @@ h6 {
     animation: fadeInUp 0.8s var(--ease-out) 0.8s both;
 }
 
-/* ── Stats Bar ── */
+/* ── Hero Stats (inside hero-content) ── */
 
-.stats-bar {
-    background: var(--clr-card);
-    padding: var(--space-xl) 0;
-    border-top: 1px solid var(--clr-border);
-    border-bottom: 1px solid var(--clr-border);
-}
-
-.stats-row {
+.hero-stats {
     display: flex;
     justify-content: center;
     gap: var(--space-2xl);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--clr-border);
 }
 
 .hero-stat {
@@ -1526,7 +1533,7 @@ h6 {
         aspect-ratio: 16 / 9;
     }
 
-    .stats-row {
+    .hero-stats {
         gap: var(--space-xl);
     }
 }
@@ -1557,8 +1564,9 @@ h6 {
         z-index: 1001;
     }
 
-    .stats-row {
+    .hero-stats {
         gap: var(--space-lg);
+        flex-wrap: wrap;
     }
 
     .hero h1 {
