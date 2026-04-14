@@ -679,6 +679,10 @@ h6 {
 }
 
 
+.gallery-cta {
+    margin-bottom: var(--space-sm);
+}
+
 .carousel-section {
     margin-top: var(--space-xl);
 }
