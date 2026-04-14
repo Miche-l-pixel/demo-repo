@@ -271,8 +271,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // ── Razorpay Payment Gateway ──
+    const RAZORPAY_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwELN30yzu7s8oDl9jkmv0mg3ODJ2oHDybVmlJXzyNHCaXcmE6nZU7vunmCDHn2h023eQ/exec';
+    const RAZORPAY_KEY_ID = 'rzp_test_SdL0hyImzTCCj0';
+
     if (donateBtn) {
-        donateBtn.addEventListener('click', () => {
+        donateBtn.addEventListener('click', async () => {
             const amount = customAmountInput && customAmountInput.value
                 ? parseInt(customAmountInput.value, 10)
                 : selectedAmount;
@@ -282,46 +286,97 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // ============================================================
-            // ⚠️  REPLACE the key below with YOUR Razorpay API key
-            //     Get it from: https://dashboard.razorpay.com/app/keys
-            //     Use rzp_test_... for testing, rzp_live_... for production
-            // ============================================================
-            const options = {
-                key: 'rzp_test_SL8TAla7mMpzDe',
-                amount: amount * 100,
-                currency: 'INR',
-                name: 'Tiyasa Social Welfare Foundation',
-                description: 'Donation to Tiyasa Social Welfare Foundation',
-                image: 'https://tiyasafoundation.org/assets/logo.jpg',
-                handler: function (response) {
-                    alert(
-                        '🎉 Thank you for your generous donation of ₹' +
-                        amount.toLocaleString() +
-                        '!\n\nPayment ID: ' + response.razorpay_payment_id +
-                        '\n\nYour support makes a real difference.'
-                    );
-                },
-                prefill: {
-                    name: '',
-                    email: '',
-                    contact: ''
-                },
-                notes: {
-                    purpose: 'Donation',
-                    organization: 'Tiyasa Social Welfare Foundation'
-                },
-                theme: {
-                    color: '#2F5D50'
-                },
-                modal: {
-                    ondismiss: function () {
-                        console.log('Razorpay checkout closed by user.');
-                    }
-                }
-            };
+            // Show loading state on button
+            const originalText = donateBtn.innerHTML;
+            donateBtn.innerHTML = '<i class="ph ph-spinner"></i> Processing...';
+            donateBtn.disabled = true;
 
             try {
+                // Step 1: Create order on server
+                const orderResponse = await fetch(RAZORPAY_BACKEND_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({
+                        action: 'createOrder',
+                        amount: amount * 100  // Convert to paise
+                    })
+                });
+
+                const orderData = await orderResponse.json();
+
+                if (orderData.error) {
+                    throw new Error(orderData.error);
+                }
+
+                // Step 2: Open Razorpay Checkout with order_id
+                const options = {
+                    key: RAZORPAY_KEY_ID,
+                    amount: orderData.amount,
+                    currency: orderData.currency,
+                    name: 'Tiyasa Social Welfare Foundation',
+                    description: 'Donation to Tiyasa Social Welfare Foundation',
+                    image: 'https://tiyasafoundation.org/assets/logo.jpg',
+                    order_id: orderData.order_id,
+                    handler: async function (response) {
+                        // Step 3: Verify payment signature on server
+                        try {
+                            const verifyResponse = await fetch(RAZORPAY_BACKEND_URL, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'text/plain' },
+                                body: JSON.stringify({
+                                    action: 'verifyPayment',
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature
+                                })
+                            });
+
+                            const verifyData = await verifyResponse.json();
+
+                            if (verifyData.verified) {
+                                alert(
+                                    '🎉 Thank you for your generous donation of ₹' +
+                                    amount.toLocaleString() +
+                                    '!\n\nPayment ID: ' + response.razorpay_payment_id +
+                                    '\n\nYour payment has been verified successfully. Your support makes a real difference.'
+                                );
+                            } else {
+                                alert(
+                                    'Payment received but verification failed.\n\n' +
+                                    'Payment ID: ' + response.razorpay_payment_id +
+                                    '\n\nPlease contact us if you face any issues.'
+                                );
+                            }
+                        } catch (verifyErr) {
+                            // Payment went through but verification call failed
+                            alert(
+                                '🎉 Thank you for your donation of ₹' +
+                                amount.toLocaleString() +
+                                '!\n\nPayment ID: ' + response.razorpay_payment_id +
+                                '\n\nYour support is appreciated.'
+                            );
+                            console.error('Verification error:', verifyErr);
+                        }
+                    },
+                    prefill: {
+                        name: '',
+                        email: '',
+                        contact: ''
+                    },
+                    notes: {
+                        purpose: 'Donation',
+                        organization: 'Tiyasa Social Welfare Foundation'
+                    },
+                    theme: {
+                        color: '#2F5D50'
+                    },
+                    modal: {
+                        ondismiss: function () {
+                            console.log('Razorpay checkout closed by user.');
+                        }
+                    }
+                };
+
                 const rzp = new Razorpay(options);
                 rzp.on('payment.failed', function (response) {
                     alert(
@@ -330,12 +385,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     );
                 });
                 rzp.open();
+
             } catch (err) {
                 alert(
-                    'Payment gateway could not be loaded.\n\n' +
-                    'Please make sure you have replaced the Razorpay API key in js/main.js'
+                    'Could not initiate payment. Please try again.\n\n' +
+                    'Error: ' + err.message
                 );
-                console.error('Razorpay error:', err);
+                console.error('Payment error:', err);
+            } finally {
+                // Restore button
+                donateBtn.innerHTML = originalText;
+                donateBtn.disabled = false;
             }
         });
     }

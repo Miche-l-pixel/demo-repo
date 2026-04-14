@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.production
+razorpay-appscript.js
 
 # OS files
 .DS_Store
