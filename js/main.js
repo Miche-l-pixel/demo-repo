@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Razorpay Payment Gateway ──
     const RAZORPAY_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwELN30yzu7s8oDl9jkmv0mg3ODJ2oHDybVmlJXzyNHCaXcmE6nZU7vunmCDHn2h023eQ/exec';
-    const RAZORPAY_KEY_ID = 'rzp_test_SdL0hyImzTCCj0';
+    const RAZORPAY_KEY_ID = 'rzp_live_SdKoTIc4JiZLkO';
 
     if (donateBtn) {
         donateBtn.addEventListener('click', async () => {
