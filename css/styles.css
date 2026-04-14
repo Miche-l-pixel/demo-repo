@@ -1030,7 +1030,60 @@ h6 {
 }
 
 .custom-input-wrap input:focus {
+    outline: none;
     border-color: var(--clr-primary);
+    background: transparent;
+}
+
+/* Donor Details Form in Donate Card */
+.donor-details-form {
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-md);
+    text-align: left;
+    background: rgba(47, 93, 80, 0.02);
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--clr-border);
+}
+
+.donor-details-title {
+    font-size: var(--fs-small);
+    color: var(--clr-dark);
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.donor-details-title .optional {
+    color: var(--clr-muted);
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+.donor-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.donor-input-group .form-group {
+    margin-bottom: 0;
+}
+
+.donor-input-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: var(--fs-small);
+    background: var(--clr-white);
+    transition: all var(--transition-fast);
+}
+
+.donor-input-group input:focus {
+    outline: none;
+    border-color: var(--clr-primary);
+    box-shadow: 0 0 0 3px var(--clr-primary-lighter);
 }
 
 .custom-input-wrap input::placeholder {
