@@ -395,13 +395,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     },
                     prefill: {
-                        name: '',
-                        email: '',
-                        contact: ''
+                        name: document.getElementById('donorName') ? document.getElementById('donorName').value.trim() : undefined,
+                        email: document.getElementById('donorEmail') ? document.getElementById('donorEmail').value.trim() : undefined,
+                        contact: document.getElementById('donorPhone') ? document.getElementById('donorPhone').value.trim() : undefined
                     },
                     notes: {
                         purpose: 'Donation',
-                        organization: 'Tiyasa Social Welfare Foundation'
+                        organization: 'Tiyasa Social Welfare Foundation',
+                        name: document.getElementById('donorName') ? document.getElementById('donorName').value.trim() : '',
+                        email: document.getElementById('donorEmail') ? document.getElementById('donorEmail').value.trim() : '',
+                        phone: document.getElementById('donorPhone') ? document.getElementById('donorPhone').value.trim() : ''
                     },
                     theme: {
                         color: '#2F5D50'
