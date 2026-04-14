@@ -535,6 +535,37 @@
             </div>
         </div>
     </div>
+    <!-- Payment Result Modal -->
+    <div class="payment-overlay" id="paymentOverlay">
+        <div class="payment-modal" id="paymentModal">
+            <button class="payment-modal-close" id="paymentModalClose">&times;</button>
+
+            <!-- Success State -->
+            <div class="payment-result payment-success" id="paymentSuccess" style="display: none;">
+                <div class="payment-icon success-icon-anim">
+                    <i class="ph ph-check-circle"></i>
+                </div>
+                <h3>Payment Successful!</h3>
+                <p class="payment-amount" id="paymentAmountText"></p>
+                <p class="payment-message">Your payment has been verified. Thank you for your generous support — your contribution makes a real difference.</p>
+                <div class="payment-details">
+                    <span class="payment-detail-label">Payment ID</span>
+                    <span class="payment-detail-value" id="paymentIdText"></span>
+                </div>
+                <button class="btn btn-primary payment-done-btn" id="paymentDoneBtn">Done</button>
+            </div>
+
+            <!-- Failure State -->
+            <div class="payment-result payment-failure" id="paymentFailure" style="display: none;">
+                <div class="payment-icon failure-icon-anim">
+                    <i class="ph ph-x-circle"></i>
+                </div>
+                <h3>Payment Failed</h3>
+                <p class="payment-message" id="paymentErrorText"></p>
+                <button class="btn btn-primary payment-done-btn" id="paymentRetryBtn">Try Again</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="js/main.js"></script>

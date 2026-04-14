@@ -271,6 +271,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // ── Payment Result Modal Helper ──
+    const paymentOverlay = document.getElementById('paymentOverlay');
+    const paymentSuccess = document.getElementById('paymentSuccess');
+    const paymentFailure = document.getElementById('paymentFailure');
+    const paymentAmountText = document.getElementById('paymentAmountText');
+    const paymentIdText = document.getElementById('paymentIdText');
+    const paymentErrorText = document.getElementById('paymentErrorText');
+
+    function showPaymentResult(type, data) {
+        paymentSuccess.style.display = 'none';
+        paymentFailure.style.display = 'none';
+
+        if (type === 'success') {
+            paymentAmountText.textContent = '₹' + data.amount.toLocaleString();
+            paymentIdText.textContent = data.paymentId;
+            paymentSuccess.style.display = 'block';
+        } else {
+            paymentErrorText.textContent = data.message || 'Something went wrong. Please try again.';
+            paymentFailure.style.display = 'block';
+        }
+
+        paymentOverlay.classList.add('active');
+    }
+
+    function closePaymentModal() {
+        paymentOverlay.classList.remove('active');
+    }
+
+    // Close modal handlers
+    if (document.getElementById('paymentModalClose')) {
+        document.getElementById('paymentModalClose').addEventListener('click', closePaymentModal);
+    }
+    if (document.getElementById('paymentDoneBtn')) {
+        document.getElementById('paymentDoneBtn').addEventListener('click', closePaymentModal);
+    }
+    if (document.getElementById('paymentRetryBtn')) {
+        document.getElementById('paymentRetryBtn').addEventListener('click', closePaymentModal);
+    }
+    if (paymentOverlay) {
+        paymentOverlay.addEventListener('click', (e) => {
+            if (e.target === paymentOverlay) closePaymentModal();
+        });
+    }
+
     // ── Razorpay Payment Gateway ──
     const RAZORPAY_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwELN30yzu7s8oDl9jkmv0mg3ODJ2oHDybVmlJXzyNHCaXcmE6nZU7vunmCDHn2h023eQ/exec';
     const RAZORPAY_KEY_ID = 'rzp_test_SdL0hyImzTCCj0';
@@ -282,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 : selectedAmount;
 
             if (!amount || amount < 1) {
-                alert('Please select or enter a valid donation amount.');
+                showPaymentResult('error', { message: 'Please select or enter a valid donation amount.' });
                 return;
             }
 
@@ -298,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({
                         action: 'createOrder',
-                        amount: amount * 100  // Convert to paise
+                        amount: amount * 100
                     })
                 });
 
@@ -333,28 +377,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             const verifyData = await verifyResponse.json();
 
-                            if (verifyData.verified) {
-                                alert(
-                                    '🎉 Thank you for your generous donation of ₹' +
-                                    amount.toLocaleString() +
-                                    '!\n\nPayment ID: ' + response.razorpay_payment_id +
-                                    '\n\nYour payment has been verified successfully. Your support makes a real difference.'
-                                );
-                            } else {
-                                alert(
-                                    'Payment received but verification failed.\n\n' +
-                                    'Payment ID: ' + response.razorpay_payment_id +
-                                    '\n\nPlease contact us if you face any issues.'
-                                );
+                            showPaymentResult('success', {
+                                amount: amount,
+                                paymentId: response.razorpay_payment_id
+                            });
+
+                            if (!verifyData.verified) {
+                                console.warn('Payment signature verification failed');
                             }
                         } catch (verifyErr) {
                             // Payment went through but verification call failed
-                            alert(
-                                '🎉 Thank you for your donation of ₹' +
-                                amount.toLocaleString() +
-                                '!\n\nPayment ID: ' + response.razorpay_payment_id +
-                                '\n\nYour support is appreciated.'
-                            );
+                            showPaymentResult('success', {
+                                amount: amount,
+                                paymentId: response.razorpay_payment_id
+                            });
                             console.error('Verification error:', verifyErr);
                         }
                     },
@@ -379,21 +415,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const rzp = new Razorpay(options);
                 rzp.on('payment.failed', function (response) {
-                    alert(
-                        'Payment failed. Please try again.\n\nReason: ' +
-                        response.error.description
-                    );
+                    showPaymentResult('error', {
+                        message: 'Payment failed: ' + response.error.description + '\n\nPlease try again.'
+                    });
                 });
                 rzp.open();
 
             } catch (err) {
-                alert(
-                    'Could not initiate payment. Please try again.\n\n' +
-                    'Error: ' + err.message
-                );
+                showPaymentResult('error', {
+                    message: 'Could not initiate payment: ' + err.message
+                });
                 console.error('Payment error:', err);
             } finally {
-                // Restore button
                 donateBtn.innerHTML = originalText;
                 donateBtn.disabled = false;
             }
