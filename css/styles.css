@@ -356,7 +356,8 @@ h6 {
 
 .hero-top-badge {
     text-align: left;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
+    margin-top: -1rem;
 }
 
 .hero-badge {
@@ -477,7 +478,8 @@ h6 {
 .hero-slideshow {
     position: relative;
     width: 100%;
-    aspect-ratio: 21 / 9;
+    aspect-ratio: 16 / 9;
+    max-height: 600px;
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 4px solid var(--clr-white);
