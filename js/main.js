@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const statsSection = document.querySelector('.hero-stats');
+    const statsSection = document.querySelector('.impact-grid');
     if (statsSection) {
         const statsObserver = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
