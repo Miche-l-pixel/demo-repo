@@ -356,8 +356,8 @@ h6 {
 
 .hero-top-badge {
     text-align: left;
-    margin-bottom: var(--space-lg);
-    margin-top: -1rem;
+    margin-bottom: var(--space-sm);
+    margin-top: -1.75rem;
 }
 
 .hero-badge {
