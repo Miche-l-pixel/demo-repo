@@ -31,7 +31,7 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="#involved">Get Involved</a></li>
-                <li><a href="#donate" class="btn btn-primary nav-cta">Donate</a></li>
+                <li><a href="#donate" class="btn btn-white nav-cta">Donate</a></li>
             </ul>
 
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -44,46 +44,53 @@
 
 
     <section class="hero" id="hero">
-        <div class="container">
-            <!-- Badge: left-aligned, visible -->
-            <div class="hero-top-badge">
-                <span class="hero-badge">
-                    <span class="pulse"></span>
-                    Sharing Smiles Since 2023
-                </span>
-            </div>
-
-            <!-- Image Frame -->
-            <div class="hero-frame">
-                <div class="hero-slideshow" id="heroSlideshow">
-                    <img src="assets/Blood Donation Camp/Blood Donation (0).jpg" alt="Blood Donation Camp" class="hero-slide active" loading="eager" style="object-position: center 0%;" />
-                    <img src="assets/Child Support/Child Support (0).jpeg" alt="Child Support" class="hero-slide" loading="lazy" />
-                    <img src="assets/Clothes Support (0).jpeg" alt="Clothes Support" class="hero-slide" loading="lazy" />
-                    <img src="assets/Disability Support/Disability (0).png" alt="Disability Support" class="hero-slide" loading="lazy" />
-                    <img src="assets/Food Camp/Food Camp (0).jpeg" alt="Food Camp" class="hero-slide" loading="lazy" />
-                    <img src="assets/Free Eye Camp/Eye Camp (0).jpeg" alt="Free Eye Camp" class="hero-slide" loading="lazy" />
-                    <img src="assets/Free Eye Surgery/Eye Surgery (0).jpeg" alt="Free Eye Surgery" class="hero-slide" loading="lazy" />
-                    <img src="assets/Medical Camp/Medical Checkup (0).jpeg" alt="Medical Checkup Camp" class="hero-slide" loading="lazy" />
-                </div>
-                <div class="hero-dots" id="heroDots"></div>
-            </div>
-
-            <!-- Text + Stats combined -->
+        <div class="container hero-split-container">
+            <!-- Text Content -->
             <div class="hero-content">
-                <h1>Empowering Communities,<br /><span class="highlight">Transforming Lives</span></h1>
+                <div class="hero-top-badge desktop-only">
+                    <span class="hero-badge">
+                        <span class="pulse"></span>
+                        Sharing Smiles Since 2023
+                    </span>
+                </div>
+
+                <h1>Empowering Communities,<br />Transforming Lives</h1>
 
                 <p class="hero-description">
-                    Our core mission is to share smiles and spread love. By contributing to our
-                    foundation, you can heal and uplift lives, no matter how small. We believe that
-                    we gain far more than what we give for charity.
+                    Our core mission is to share smiles and spread love. By contributing, you
+                    heal and uplift lives. We believe in gaining for more than we give.
                 </p>
 
                 <div class="hero-actions">
                     <a href="#donate" class="btn btn-primary">Donate Now <i class="ph ph-heart"></i></a>
-                    <a href="#mission" class="btn btn-outline-black">Our Mission <i class="ph ph-play-circle"></i></a>
+                    <a href="#mission" class="btn btn-outline-dark">Our Mission <i class="ph ph-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Image Frame -->
+            <div class="hero-slider-block">
+                <div class="hero-top-badge mobile-only">
+                    <span class="hero-badge">
+                        <span class="pulse"></span>
+                        Sharing Smiles Since 2023
+                    </span>
                 </div>
 
-
+                <div class="hero-bg-slider-wrapper">
+                    <button class="hero-nav-arrow prev" id="heroPrev"><i class="ph ph-caret-left"></i></button>
+                    
+                    <div class="hero-bg-slider" id="heroBgSlider">
+                        <img src="assets/Child Support/Child Support (0).jpeg" class="hero-bg-slide active" loading="eager" />
+                        <img src="assets/Blood Donation Camp/Blood Donation (0).jpg" class="hero-bg-slide" loading="lazy" />
+                        <img src="assets/Disability Support/Disability (0).png" class="hero-bg-slide" loading="lazy" />
+                        <img src="assets/Food Camp/Food Camp (0).jpeg" class="hero-bg-slide" loading="lazy" />
+                        <img src="assets/Medical Camp/Medical Checkup (0).jpeg" class="hero-bg-slide" loading="lazy" />
+                    </div>
+                    
+                    <button class="hero-nav-arrow next" id="heroNext"><i class="ph ph-caret-right"></i></button>
+                </div>
+                
+                <div class="hero-dots" id="heroDots"></div>
             </div>
         </div>
     </section>
@@ -159,14 +166,33 @@
     </section>
 
 
+    <section class="featured-project section-padding" id="featured">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <h2 class="section-title">Featured Project</h2>
+            </div>
+            <div class="featured-card reveal">
+                <img src="assets/Medical Camp/Medical Checkup (0).jpeg" alt="Featured Project" class="featured-image" />
+                <div class="featured-content">
+                    <h3>Community Health Initiative</h3>
+                    <div class="progress-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                    <div class="featured-meta">
+                        <span class="funded">75% Funded</span>
+                        <a href="#donate" class="btn btn-primary">Contribute &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="impact section-padding" id="impact">
         <div class="container">
             <div class="section-header text-center reveal">
-                <span class="section-label">Our Impact</span>
-                <h2 class="section-title">Numbers That Tell Our Story</h2>
-                <p class="section-subtitle">
-                    Every number represents a smile shared, a life touched, and hope restored.
-                </p>
+                <h2 class="section-title" style="color: white;">Our Impact</h2>
             </div>
 
             <div class="impact-grid reveal">
@@ -189,11 +215,6 @@
             </div>
 
 
-            <div class="gallery-cta text-center reveal">
-                <a href="./gallery" class="btn btn-primary">
-                    <i class="ph ph-images-square"></i> View Gallery
-                </a>
-            </div>
 
             <div class="carousel-section reveal" id="projects">
                 <div class="carousel-wrapper">
@@ -244,6 +265,10 @@
                     </button>
 
                     <div class="carousel-dots" id="carouselDots"></div>
+                </div>
+
+                <div class="gallery-btn-wrapper text-center reveal" style="margin-top: 2rem;">
+                    <a href="gallery.html" class="btn btn-white gallery-cta-sober">View Full Gallery &rarr;</a>
                 </div>
             </div>
         </div>

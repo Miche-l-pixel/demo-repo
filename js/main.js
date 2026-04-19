@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ── Hero Slideshow ──
-    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroSlides = document.querySelectorAll('.hero-bg-slide');
     const heroDots = document.getElementById('heroDots');
     let heroIndex = 0;
     let heroInterval;
@@ -44,8 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         startHeroAutoplay();
 
+        const btnPrev = document.getElementById('heroPrev');
+        const btnNext = document.getElementById('heroNext');
+        if(btnPrev) btnPrev.addEventListener('click', () => { clearInterval(heroInterval); goToHeroSlide((heroIndex - 1 + heroSlides.length) % heroSlides.length); startHeroAutoplay(); });
+        if(btnNext) btnNext.addEventListener('click', () => { clearInterval(heroInterval); nextHeroSlide(); startHeroAutoplay(); });
+
         // Pause on hover (desktop)
-        const heroSection = document.getElementById('hero');
+        const heroSection = document.getElementById('heroBgSlider');
         if (heroSection) {
             heroSection.addEventListener('mouseenter', () => clearInterval(heroInterval));
             heroSection.addEventListener('mouseleave', startHeroAutoplay);
