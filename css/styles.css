@@ -352,12 +352,12 @@ h6 {
 .hero {
     position: relative;
     background: var(--clr-hero-bg);
-    min-height: 80vh;
+    min-height: auto;
     display: flex;
     align-items: center;
     overflow: hidden;
     padding-top: 50px;
-    padding-bottom: var(--space-xl);
+    padding-bottom: var(--space-lg);
 }
 
 .hero-split-container {
